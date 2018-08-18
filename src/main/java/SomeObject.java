@@ -1,4 +1,10 @@
+import java.util.HashMap;
+import java.util.Map;
+
+import static java.util.Objects.nonNull;
+
 public class SomeObject {
+    private static Map<Integer, SomeObject> cache = new HashMap<>();
     private int property;
 
 
@@ -7,6 +13,13 @@ public class SomeObject {
     }
 
     static SomeObject getInstance(int property) {
-        return new SomeObject(property);
+        if (nonNull(cache.get(property))) {
+            return cache.get(property);
+        } else {
+            SomeObject someObject = new SomeObject(property);
+            cache.put(property, someObject);
+            return someObject;
+
+        }
     }
 }
